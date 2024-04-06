@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation"
 import { connectToDB } from "@/db/db"
 import Note from "@/models/notesModel"
+import { revalidatePath } from "next/cache"
 
 export async function editNote(id: string, title: string, content: string) {
   await connectToDB()
@@ -11,6 +12,7 @@ export async function editNote(id: string, title: string, content: string) {
   updatedNote.content = content
   await updatedNote.save()
 
+  revalidatePath("/")
   redirect("/")
 }
 
@@ -18,6 +20,7 @@ export async function deleteNote(id: string) {
   await connectToDB()
   await Note.findByIdAndDelete(id.toString())
 
+  revalidatePath("/")
   redirect("/")
 }
 
@@ -42,5 +45,6 @@ export async function createNote(
   connectToDB()
   await Note.create({ title, content })
 
+  revalidatePath("/")
   redirect("/")
 }

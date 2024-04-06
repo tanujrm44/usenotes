@@ -4,6 +4,8 @@ import Notes from '@/models/notesModel'
 import React from 'react'
 import Link from 'next/link'
 
+//export const revalidate = 0
+
 export default async function page() {
   connectToDB()
   const notes = await Notes.find()
@@ -31,11 +33,6 @@ export default async function page() {
                   Edit
                 </button>
               </Link>
-              <button
-                className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-red-300"
-              >
-                Delete
-              </button>
               <Link href={`/note/${item._id}`}>
                 <button
                   className="bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 focus:outline-none focus:ring focus:border-gray-300"

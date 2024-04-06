@@ -16,9 +16,15 @@ const YourParentComponent = async (props: NoteViewPageProps) => {
 
     return (
         <div>
-            <NoteDisplay title={note.title} content={note.content} />
+            <NoteDisplay title={note?.title} content={note?.content} id={id} />
         </div>
     );
 };
+
+export async function generateStaticParams() {
+    connectToDB();
+    const notes = await Note.find();
+    return notes.map((note) => ({ id: note._id.toString() }));
+}
 
 export default YourParentComponent;
